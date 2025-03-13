@@ -11,10 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserSignUpDTO {
+public class UserUpdateDTO {
     private String id;
     private String name;
-    private String email;
     private String password;
     private List<String> roles;
 }

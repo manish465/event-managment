@@ -14,8 +14,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private AuthRepository authRepository;
-    private JwtService jwtService;
+    private final AuthRepository authRepository;
+    private final JwtService jwtService;
     private final KafkaTemplate<String, UserSignUpRequestDTO> userSignUpKafkaTemplate;
 
     public GeneralSuccessResponseDTO userSignUp(UserSignUpRequestDTO userSignUpRequestDTO) {
