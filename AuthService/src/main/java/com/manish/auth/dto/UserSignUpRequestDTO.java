@@ -1,6 +1,8 @@
 package com.manish.auth.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
@@ -8,8 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserSignUpRequestDTO {
-    private String name;
-    private String email;
-    private String password;
-    private List<String> roles;
+    private List<UserSignUpDTO> items;
 }
