@@ -11,9 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserUpdateDTO {
-    private String id;
-    private String name;
-    private String password;
-    private List<String> roles;
+public class AddUserAccessRequestDTO {
+    private String role;
+    private List<String> paths;
+    private String description;
 }

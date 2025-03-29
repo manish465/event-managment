@@ -1,53 +1,97 @@
 package com.manish.user.controller;
 
-import com.manish.user.dto.FetchUserResponseDTO;
-import com.manish.user.dto.GeneralSuccessResponseDTO;
-import com.manish.user.dto.UserSignUpRequestDTO;
-import com.manish.user.dto.UserUpdateRequestDTO;
-import com.manish.user.service.UserService;
+import com.manish.user.dto.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Log4j
+@Slf4j
 public class UserController {
-    private final UserService userService;
 
-    @PostMapping("/user/create")
-    public ResponseEntity<GeneralSuccessResponseDTO> addUsers(@RequestBody UserSignUpRequestDTO userSignUpRequestDTO) {
-         return new ResponseEntity<>(userService.addUsers(userSignUpRequestDTO), HttpStatus.CREATED);
+    @PostMapping("/api/v1/user/add-user")
+    public ResponseEntity<GeneralMessageResponseDTO> addUser(@RequestPart("user-data") UserSignUpRequestDTO userSignUpRequestDTO,
+                                                             @RequestPart("file-data") MultipartFile profilePicture) {
+        log.info("Add User request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
+        return null;
     }
 
-    @GetMapping("/user/user")
-    public ResponseEntity<FetchUserResponseDTO> getUsers(@RequestParam List<String> emails) {
-        return new ResponseEntity<>(userService.getUsers(emails), HttpStatus.OK);
+    @GetMapping("/api/v1/user/get-user")
+    public ResponseEntity<List<GetUserResponseDTO>> getUser(@RequestParam("user-id") List<String> userIds) {
+        log.info("Get User request received for user-id {}", userIds);
+        return null;
     }
 
-    @PutMapping("/user/user")
-    public ResponseEntity<GeneralSuccessResponseDTO> updateUsers(
-            @RequestBody UserUpdateRequestDTO userUpdateRequestDTO
-    ) {
-        return new ResponseEntity<>(userService.updateUsers(userUpdateRequestDTO), HttpStatus.OK);
+    @PutMapping("/api/v1/user/update-user")
+    public ResponseEntity<GeneralMessageResponseDTO> updateUser(@RequestPart("user-data") UpdateUserRequestDTO updateUserRequestDTO,
+                                                                @RequestPart("file-data") MultipartFile profilePicture) {
+        log.info("Update User request received for user-data {} and file-data {}", updateUserRequestDTO, profilePicture);
+        return null;
     }
 
-    @DeleteMapping("/user/user")
-    public ResponseEntity<GeneralSuccessResponseDTO> deleteUsers(@RequestParam List<String> emails) {
-        return new ResponseEntity<>(userService.deleteUsers(emails), HttpStatus.OK);
+    @DeleteMapping("/api/v1/user/delete-user")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteUser(@RequestParam("user-id") List<String> userIds) {
+        log.info("Delete User request received for userIds {}", userIds);
+        return null;
     }
 
-    @DeleteMapping("/user/add")
-    public ResponseEntity<GeneralSuccessResponseDTO> deleteAllUsers() {
-        return new ResponseEntity<>(userService.deleteAllUsers(), HttpStatus.OK);
+    @DeleteMapping("/api/v1/user/delete-all-user")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteAllUser() {
+        log.info("Delete All User request received");
+        return null;
     }
 
-    @GetMapping("/user/health-check")
-    public ResponseEntity<GeneralSuccessResponseDTO> healthCheck(){
-        return new ResponseEntity<>(new GeneralSuccessResponseDTO("OK"), HttpStatus.OK);
+    @GetMapping("/api/v1/user/add-role")
+    public ResponseEntity<GeneralMessageResponseDTO> addRole(@RequestParam("role") List<String> roles) {
+        log.info("Add Role request received for roles {}", roles);
+        return null;
+    }
+
+    @GetMapping("/api/v1/user/get-role")
+    public ResponseEntity<List<GetRoleResponseDTO>> getRole(@RequestParam("role") List<String> roles) {
+        log.info("Get Role request received for roles {}", roles);
+        return null;
+    }
+
+    @DeleteMapping("/api/v1/user/delete-role")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteRole(@RequestParam("role") String role) {
+        log.info("Delete Role request received for role {}", role);
+        return null;
+    }
+
+    @DeleteMapping("/api/v1/user/delete-all-role")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteAllRole() {
+        log.info("Delete All Role request received");
+        return null;
+    }
+
+    @PostMapping("/api/v1/user/add-access")
+    public ResponseEntity<GeneralMessageResponseDTO> addAccess(@RequestBody AddUserAccessRequestDTO addUserAccessRequestDTO) {
+        log.info("Add Access request received for access-data {}", addUserAccessRequestDTO);
+        return null;
+    }
+
+    @DeleteMapping("/api/v1/user/delete-access")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteAccess(@RequestParam("access") String accessId) {
+        log.info("Delete Access request received for access {}", accessId);
+        return null;
+    }
+
+    @DeleteMapping("/api/v1/user/delete-all-access")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteAllAccess() {
+        log.info("Delete All Access request received");
+        return null;
+    }
+
+    @GetMapping("/api/v1/user/health-check")
+    public ResponseEntity<GeneralMessageResponseDTO> healthCheck() {
+        log.info("User health check request received");
+        return new ResponseEntity<>(new GeneralMessageResponseDTO("User service is up and running"), HttpStatus.OK);
     }
 }

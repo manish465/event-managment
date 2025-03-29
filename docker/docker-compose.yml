@@ -1,15 +1,5 @@
 version: '3.8'
 services:
-  auth-db:
-    image: mongo:latest
-    container_name: auth-db
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
-    volumes:
-      - auth-db-data:/data/db
   messaging-service:
     image: confluentinc/cp-kafka:latest
     container_name: messaging-service
@@ -30,5 +20,15 @@ services:
     environment:
       - ZOOKEEPER_CLIENT_PORT=2181
       - ZOOKEEPER_TICK_TIME=2000
+  user-service-db:
+    image: postgres:latest
+    container_name: user-service-db
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
 volumes:
-  auth-db-data:
+  user-service-db-data:

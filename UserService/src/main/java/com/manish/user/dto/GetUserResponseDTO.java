@@ -1,6 +1,5 @@
 package com.manish.user.dto;
 
-import com.manish.user.model.RoleModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FetchUserDTO {
+public class GetUserResponseDTO {
     private String id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String bio;
+    private String profilePicture;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<RoleModel> roles;
+    private List<String> roles;
 }

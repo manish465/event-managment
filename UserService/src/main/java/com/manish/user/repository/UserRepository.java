@@ -1,12 +1,7 @@
 package com.manish.user.repository;
 
-import com.manish.user.model.UserModel;
+import com.manish.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-@Repository
-public interface UserRepository extends JpaRepository<UserModel, String> {
-    List<UserModel> findAllByEmailIn(List<String> emails);
+public interface UserRepository extends JpaRepository<UserEntity, String> {
 }

@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateRequestDTO {
-    private List<UserSignUpDTO> items;
+public class GeneralMessageResponseDTO {
+    private String message;
 }
