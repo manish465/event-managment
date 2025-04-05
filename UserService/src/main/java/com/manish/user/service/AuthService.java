@@ -2,32 +2,66 @@ package com.manish.user.service;
 
 import com.manish.user.dto.GeneralMessageResponseDTO;
 import com.manish.user.dto.UserSignInRequestDTO;
-import com.manish.user.dto.UserSignUpRequestDTO;
 import com.manish.user.dto.UserVerifyResponseDTO;
+import com.manish.user.entity.RoleEntity;
+import com.manish.user.entity.UserEntity;
+import com.manish.user.exception.ApplicationException;
+import com.manish.user.repository.RoleRepository;
+import com.manish.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AuthService {
-    public GeneralMessageResponseDTO singUp(UserSignUpRequestDTO userSignUpRequestDTO, MultipartFile profilePicture) {
-        log.info("User sign up request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
-        return new GeneralMessageResponseDTO("User sign up request received");
-    }
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public GeneralMessageResponseDTO signIn(UserSignInRequestDTO userSignInRequestDTO) {
         log.info("User sign in request received for user-data {}", userSignInRequestDTO);
-        return null;
+
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userSignInRequestDTO.getEmail());
+        if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
+
+        if(!passwordEncoder.matches(userSignInRequestDTO.getPassword(), userEntityOptional.get().getHashPassword()))
+            throw new ApplicationException("Invalid password");
+
+        String accessToken = JWTService.generateToken(userEntityOptional.get().getId());
+        return new GeneralMessageResponseDTO(accessToken);
     }
 
-    public Boolean verifyToken(String accessToken) {
+    public Boolean verifyToken(String accessToken, String path) {
         log.info("User verify token request received for access-token {}", accessToken);
-        return null;
+
+        if(!JWTService.validateToken(accessToken)) return false;
+
+        String userId = JWTService.getSubjectFromToken(accessToken);
+        Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
+        if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
+        return verifyAuthorization(userEntityOptional.get().getRoles(), path);
     }
 
     public UserVerifyResponseDTO decryptToken(String accessToken) {
         log.info("User decrypt token request received for access-token {}", accessToken);
-        return null;
+
+        String userId = JWTService.getSubjectFromToken(accessToken);
+        Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
+        if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
+
+        return new UserVerifyResponseDTO(userId);
+    }
+
+    public Boolean verifyAuthorization(List<RoleEntity> roles, String path) {
+        log.info("User verify authorization request received for roles {} and path {}", roles, path);
+
+        List<Long> roleIds = roles.stream().map(RoleEntity::getId).toList();
+        return roleRepository.existsRoleWithPathAndIdIn(path, roleIds);
     }
 }

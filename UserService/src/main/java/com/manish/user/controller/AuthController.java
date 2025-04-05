@@ -2,6 +2,7 @@ package com.manish.user.controller;
 
 import com.manish.user.dto.*;
 import com.manish.user.service.AuthService;
+import com.manish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
-
     private final AuthService authService;
+    private final UserService userService;
 
     @PostMapping("/api/v1/auth/sign-up")
     public ResponseEntity<GeneralMessageResponseDTO> singUp(@RequestPart("user-data") UserSignUpRequestDTO userSignUpRequestDTO, @RequestPart("file-data") MultipartFile profilePicture) {
         log.info("User sign up request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
-        return new ResponseEntity<>(authService.singUp(userSignUpRequestDTO, profilePicture), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO, profilePicture), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/v1/auth/sign-in")
@@ -29,9 +30,9 @@ public class AuthController {
     }
 
     @GetMapping("api/v1/auth/verify-token")
-    public ResponseEntity<Boolean> verifyToken(@RequestParam("access-token") String accessToken) {
+    public ResponseEntity<Boolean> verifyToken(@RequestParam("access-token") String accessToken, @RequestParam("path") String path) {
         log.info("User verify token request received for access-token {}", accessToken);
-        return ResponseEntity.ok(authService.verifyToken(accessToken));
+        return ResponseEntity.ok(authService.verifyToken(accessToken, path));
     }
 
     @GetMapping("api/v1/auth/decrypt-token")

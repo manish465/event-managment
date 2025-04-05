@@ -19,6 +19,8 @@ public class RoleEntity {
     private Long id;
     @Column(name = "role", unique = true)
     private String role;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AccessEntity> accesses;
+    @ElementCollection
+    @CollectionTable(name = "role_paths", joinColumns = @JoinColumn(name = "role_id"))
+    @Column(name = "path")
+    private List<String> path;
 }

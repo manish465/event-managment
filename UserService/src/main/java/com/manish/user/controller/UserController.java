@@ -1,6 +1,7 @@
 package com.manish.user.controller;
 
 import com.manish.user.dto.*;
+import com.manish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
+    private final UserService userService;
 
     @PostMapping("/api/v1/user/add-user")
     public ResponseEntity<GeneralMessageResponseDTO> addUser(@RequestPart("user-data") UserSignUpRequestDTO userSignUpRequestDTO,
                                                              @RequestPart("file-data") MultipartFile profilePicture) {
         log.info("Add User request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
-        return null;
+        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO, profilePicture), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/v1/user/get-user")
@@ -77,15 +79,8 @@ public class UserController {
         return null;
     }
 
-    @DeleteMapping("/api/v1/user/delete-access")
     public ResponseEntity<GeneralMessageResponseDTO> deleteAccess(@RequestParam("access") String accessId) {
         log.info("Delete Access request received for access {}", accessId);
-        return null;
-    }
-
-    @DeleteMapping("/api/v1/user/delete-all-access")
-    public ResponseEntity<GeneralMessageResponseDTO> deleteAllAccess() {
-        log.info("Delete All Access request received");
         return null;
     }
 
