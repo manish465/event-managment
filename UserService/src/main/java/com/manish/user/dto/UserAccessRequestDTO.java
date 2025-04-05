@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddUserAccessRequestDTO {
+public class UserAccessRequestDTO {
     private String role;
-    private List<String> paths;
+    private String path;
 }
