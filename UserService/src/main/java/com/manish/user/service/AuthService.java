@@ -3,17 +3,14 @@ package com.manish.user.service;
 import com.manish.user.dto.GeneralMessageResponseDTO;
 import com.manish.user.dto.UserSignInRequestDTO;
 import com.manish.user.dto.UserVerifyResponseDTO;
-import com.manish.user.entity.RoleEntity;
 import com.manish.user.entity.UserEntity;
 import com.manish.user.exception.ApplicationException;
-import com.manish.user.repository.RoleRepository;
 import com.manish.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
     public GeneralMessageResponseDTO signIn(UserSignInRequestDTO userSignInRequestDTO) {
@@ -45,7 +42,7 @@ public class AuthService {
         String userId = JWTService.getSubjectFromToken(accessToken);
         Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
         if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
-        return verifyAuthorization(userEntityOptional.get().getRoles(), path);
+        return roleService.verifyAuthorization(userEntityOptional.get().getRoles(), path);
     }
 
     public UserVerifyResponseDTO decryptToken(String accessToken) {
@@ -56,12 +53,5 @@ public class AuthService {
         if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
 
         return new UserVerifyResponseDTO(userId);
-    }
-
-    public Boolean verifyAuthorization(List<RoleEntity> roles, String path) {
-        log.info("User verify authorization request received for roles {} and path {}", roles, path);
-
-        List<Long> roleIds = roles.stream().map(RoleEntity::getId).toList();
-        return roleRepository.existsRoleWithPathAndIdIn(path, roleIds);
     }
 }

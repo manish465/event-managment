@@ -27,26 +27,26 @@ public class UserController {
     @GetMapping("/api/v1/user/get-user")
     public ResponseEntity<List<GetUserResponseDTO>> getUser(@RequestParam("user-id") List<String> userIds) {
         log.info("Get User request received for user-id {}", userIds);
-        return null;
+        return new ResponseEntity<>(userService.getUser(userIds), HttpStatus.OK);
     }
 
     @PutMapping("/api/v1/user/update-user")
     public ResponseEntity<GeneralMessageResponseDTO> updateUser(@RequestPart("user-data") UpdateUserRequestDTO updateUserRequestDTO,
                                                                 @RequestPart("file-data") MultipartFile profilePicture) {
         log.info("Update User request received for user-data {} and file-data {}", updateUserRequestDTO, profilePicture);
-        return null;
+        return new ResponseEntity<>(userService.updateUser(updateUserRequestDTO, profilePicture), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/v1/user/delete-user")
     public ResponseEntity<GeneralMessageResponseDTO> deleteUser(@RequestParam("user-id") List<String> userIds) {
         log.info("Delete User request received for userIds {}", userIds);
-        return null;
+        return new ResponseEntity<>(userService.deleteUser(userIds), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/v1/user/delete-all-user")
     public ResponseEntity<GeneralMessageResponseDTO> deleteAllUser() {
         log.info("Delete All User request received");
-        return null;
+        return new ResponseEntity<>(userService.deleteAllUser(), HttpStatus.OK);
     }
 
     @GetMapping("/api/v1/user/add-role")
@@ -79,6 +79,7 @@ public class UserController {
         return null;
     }
 
+    @DeleteMapping("/api/v1/user/delete-access")
     public ResponseEntity<GeneralMessageResponseDTO> deleteAccess(@RequestParam("access") String accessId) {
         log.info("Delete Access request received for access {}", accessId);
         return null;

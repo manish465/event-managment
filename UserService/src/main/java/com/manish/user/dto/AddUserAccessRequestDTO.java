@@ -14,5 +14,4 @@ import java.util.List;
 public class AddUserAccessRequestDTO {
     private String role;
     private List<String> paths;
-    private String description;
 }
