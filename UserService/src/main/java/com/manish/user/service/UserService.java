@@ -38,8 +38,6 @@ public class UserService {
                 .hashPassword(passwordEncoder.encode(userSignUpRequestDTO.getPassword()))
                 .bio(userSignUpRequestDTO.getBio())
                 .profilePicture("https://modii.org/wp-content/uploads/2020/12/random.png") // TODO :: call picture service and get picture url string
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
 
         userRepository.save(userEntity);
@@ -61,8 +59,6 @@ public class UserService {
                                 .email(userEntity.getEmail())
                                 .bio(userEntity.getBio())
                                 .profilePicture(userEntity.getProfilePicture())
-                                .createdAt(userEntity.getCreatedAt())
-                                .updatedAt(userEntity.getUpdatedAt())
                                 .roles(userEntity.getRoles().stream().map(RoleEntity::getRole).toList())
                                 .build()
                 ).toList();
