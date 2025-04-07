@@ -1,8 +1,8 @@
 package com.manish.user.service;
 
-import com.manish.user.dto.GeneralMessageResponseDTO;
-import com.manish.user.dto.UserSignInRequestDTO;
-import com.manish.user.dto.UserVerifyResponseDTO;
+import com.manish.common.dto.GeneralMessageResponseDTO;
+import com.manish.common.dto.UserSignInRequestDTO;
+import com.manish.common.dto.UserVerifyResponseDTO;
 import com.manish.user.entity.UserEntity;
 import com.manish.user.exception.ApplicationException;
 import com.manish.user.repository.UserRepository;

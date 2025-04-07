@@ -1,8 +1,8 @@
 package com.manish.event.controller;
 
-import com.manish.event.dto.AddBookingEventDTO;
-import com.manish.event.dto.GeneralMessageResponseDTO;
-import com.manish.event.dto.GetBookingResponseDTO;
+import com.manish.common.dto.GeneralMessageResponseDTO;
+import com.manish.common.dto.AddBookingEventDTO;
+import com.manish.common.dto.GetBookingResponseDTO;
 import com.manish.event.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

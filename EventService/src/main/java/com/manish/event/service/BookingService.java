@@ -1,10 +1,10 @@
 package com.manish.event.service;
 
-import com.manish.event.dto.AddBookingEventDTO;
-import com.manish.event.dto.GeneralMessageResponseDTO;
-import com.manish.event.dto.GetBookingResponseDTO;
+import com.manish.common.dto.GeneralMessageResponseDTO;
+import com.manish.common.dto.AddBookingEventDTO;
+import com.manish.common.dto.GetBookingResponseDTO;
 import com.manish.event.entity.BookingEntity;
-import com.manish.event.entity.BookingStatus;
+import com.manish.common.enums.BookingStatus;
 import com.manish.event.exception.ApplicationException;
 import com.manish.event.repository.BookingRepository;
 import com.manish.event.utils.CompareStringUtils;

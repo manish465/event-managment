@@ -1,9 +1,9 @@
 package com.manish.event.service;
 
-import com.manish.event.dto.AddEventRequestDTO;
-import com.manish.event.dto.GeneralMessageResponseDTO;
-import com.manish.event.dto.GetEventResponseDTO;
-import com.manish.event.dto.UpdateEventRequestDTO;
+import com.manish.common.dto.GeneralMessageResponseDTO;
+import com.manish.common.dto.AddEventRequestDTO;
+import com.manish.common.dto.GetEventResponseDTO;
+import com.manish.common.dto.UpdateEventRequestDTO;
 import com.manish.event.entity.EventEntity;
 import com.manish.event.exception.ApplicationException;
 import com.manish.event.repository.EventRepository;

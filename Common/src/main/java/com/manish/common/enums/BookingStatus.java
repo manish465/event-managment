@@ -1,4 +1,4 @@
-package com.manish.event.entity;
+package com.manish.common.enums;
 
 public enum BookingStatus {
     CONFIRMED,

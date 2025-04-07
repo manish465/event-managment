@@ -1,6 +1,6 @@
-package com.manish.event.dto;
+package com.manish.common.dto;
 
-import com.manish.event.entity.BookingStatus;
+import com.manish.common.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

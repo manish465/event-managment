@@ -1,5 +1,6 @@
 package com.manish.event.entity;
 
+import com.manish.common.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

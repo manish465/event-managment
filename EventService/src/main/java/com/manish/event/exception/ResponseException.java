@@ -1,6 +1,5 @@
 package com.manish.event.exception;
 
-import com.manish.event.dto.GeneralFailResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

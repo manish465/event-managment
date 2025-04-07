@@ -1,4 +1,4 @@
-package com.manish.event.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddBookingEventDTO {
-    private String eventId;
-    private String userId;
+public class UserAccessRequestDTO {
+    private String role;
+    private String path;
 }

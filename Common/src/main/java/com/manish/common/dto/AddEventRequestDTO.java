@@ -1,4 +1,4 @@
-package com.manish.event.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

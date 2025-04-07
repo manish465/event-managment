@@ -1,4 +1,4 @@
-package com.manish.event.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,14 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdateEventRequestDTO {
+public class GetEventResponseDTO {
     private String id;
+    private String organizerId;
     private String eventName;
     private String description;
     private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
-    private LocalDateTime bookingStartDateTime;
-    private LocalDateTime bookingEndDateTime;
+    private LocalDateTime endDatetime;
+    private LocalDateTime bookingStartDatetime;
+    private LocalDateTime bookingEndDatetime;
     private Integer maxCapacity;
     private List<String> eventImages;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

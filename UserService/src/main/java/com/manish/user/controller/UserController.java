@@ -1,6 +1,6 @@
 package com.manish.user.controller;
 
-import com.manish.user.dto.*;
+import com.manish.common.dto.*;
 import com.manish.user.service.AccessService;
 import com.manish.user.service.RoleService;
 import com.manish.user.service.UserService;

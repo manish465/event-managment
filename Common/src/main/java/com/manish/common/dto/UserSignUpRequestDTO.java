@@ -1,4 +1,4 @@
-package com.manish.user.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class UpdateUserRequestDTO {
-    private String userID;
+public class UserSignUpRequestDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private String bio;
     private List<String> roles;
 }

@@ -1,4 +1,4 @@
-package com.manish.user.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserAccessRequestDTO {
-    private String role;
-    private String path;
+public class UserVerifyResponseDTO {
+    private String userID;
 }

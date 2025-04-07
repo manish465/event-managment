@@ -1,14 +1,12 @@
-package com.manish.user.dto;
+package com.manish.common.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserVerifyResponseDTO {
-    private String userID;
+public class GeneralFailResponseDTO {
+    private String error;
 }
