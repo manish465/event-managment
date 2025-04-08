@@ -6,6 +6,7 @@ import com.manish.common.dto.GetEventResponseDTO;
 import com.manish.common.dto.UpdateEventRequestDTO;
 import com.manish.event.entity.EventEntity;
 import com.manish.event.exception.ApplicationException;
+import com.manish.event.mapper.EventMapper;
 import com.manish.event.repository.EventRepository;
 import com.manish.event.utils.CompareDateTimeUtils;
 import com.manish.event.utils.CompareStringUtils;
@@ -55,45 +56,14 @@ public class EventService {
         if(addEventRequestDTO.getMaxCapacity() <= 0) throw new ApplicationException("Max capacity is required");
 
         List<String> eventImagesURL = List.of("https://modii.org/wp-content/uploads/2020/12/random.png"); // TODO :: call picture service and get picture url string
-
-        eventRepository.save(
-                EventEntity.builder()
-                        .organizerId(addEventRequestDTO.getOrganizerId())
-                        .eventName(addEventRequestDTO.getEventName())
-                        .description(addEventRequestDTO.getDescription())
-                        .startDateTime(addEventRequestDTO.getStartDateTime())
-                        .endDateTime(addEventRequestDTO.getEndDatetime())
-                        .bookingStartDateTime(addEventRequestDTO.getBookingStartDatetime())
-                        .bookingEndDateTime(addEventRequestDTO.getBookingEndDatetime())
-                        .maxCapacity(addEventRequestDTO.getMaxCapacity())
-                        .eventImages(eventImagesURL)
-                        .build()
-        );
+        eventRepository.save(EventMapper.toEntity(addEventRequestDTO, eventImagesURL));
 
         return new GeneralMessageResponseDTO("Event added successfully");
     }
 
     public List<GetEventResponseDTO> getEvent(List<String> eventIds) {
         log.info("Get Event request received for event-ids {}", eventIds);
-
-        return eventRepository.findAllById(eventIds)
-                .stream()
-                .map(event -> GetEventResponseDTO.builder()
-                        .id(event.getId())
-                        .organizerId(event.getOrganizerId())
-                        .eventName(event.getEventName())
-                        .description(event.getDescription())
-                        .startDateTime(event.getStartDateTime())
-                        .endDatetime(event.getEndDateTime())
-                        .bookingStartDatetime(event.getBookingStartDateTime())
-                        .bookingEndDatetime(event.getBookingEndDateTime())
-                        .maxCapacity(event.getMaxCapacity())
-                        .eventImages(event.getEventImages())
-                        .createdAt(event.getCreatedAt())
-                        .updatedAt(event.getUpdatedAt())
-                        .build()
-                )
-                .toList();
+        return eventRepository.findAllById(eventIds).stream().map(EventMapper::toDto).toList();
     }
 
     public GeneralMessageResponseDTO updateEvent(UpdateEventRequestDTO updateEventRequestDTO) {
@@ -131,16 +101,7 @@ public class EventService {
 
         List<String> eventImagesURL = List.of("https://modii.org/wp-content/uploads/2020/12/random.png"); // TODO :: call picture service and get picture url string
 
-        optionalEventEntity.get().setEventName(updateEventRequestDTO.getEventName());
-        optionalEventEntity.get().setDescription(updateEventRequestDTO.getDescription());
-        optionalEventEntity.get().setStartDateTime(updateEventRequestDTO.getStartDateTime());
-        optionalEventEntity.get().setEndDateTime(updateEventRequestDTO.getEndDateTime());
-        optionalEventEntity.get().setBookingStartDateTime(updateEventRequestDTO.getBookingStartDateTime());
-        optionalEventEntity.get().setBookingEndDateTime(updateEventRequestDTO.getBookingEndDateTime());
-        optionalEventEntity.get().setMaxCapacity(updateEventRequestDTO.getMaxCapacity());
-        optionalEventEntity.get().setEventImages(eventImagesURL);
-
-        eventRepository.save(optionalEventEntity.get());
+        eventRepository.save(EventMapper.toEntity(optionalEventEntity.get(), updateEventRequestDTO, eventImagesURL));
 
         return new GeneralMessageResponseDTO("Event updated successfully");
     }

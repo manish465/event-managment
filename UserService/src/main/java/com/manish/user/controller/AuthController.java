@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +20,9 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/api/v1/auth/sign-up")
-    public ResponseEntity<GeneralMessageResponseDTO> singUp(@RequestPart("user-data") UserSignUpRequestDTO userSignUpRequestDTO, @RequestPart("file-data") MultipartFile profilePicture) {
-        log.info("User sign up request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
-        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO, profilePicture), HttpStatus.CREATED);
+    public ResponseEntity<GeneralMessageResponseDTO> singUp(@ModelAttribute UserSignUpRequestDTO userSignUpRequestDTO) {
+        log.info("User sign up request received for user-data {}", userSignUpRequestDTO);
+        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/v1/auth/sign-in")

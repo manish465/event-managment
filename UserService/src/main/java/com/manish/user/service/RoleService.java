@@ -4,12 +4,12 @@ import com.manish.common.dto.GeneralMessageResponseDTO;
 import com.manish.common.dto.GetRoleResponseDTO;
 import com.manish.user.entity.RoleEntity;
 import com.manish.user.exception.ApplicationException;
+import com.manish.user.mapper.RoleMapper;
 import com.manish.user.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +32,7 @@ public class RoleService {
         Optional<RoleEntity> optionalRoleEntity = roleRepository.findByRole(role);
         if(optionalRoleEntity.isPresent()) throw new ApplicationException("Role already exists");
 
-        RoleEntity roleEntity = RoleEntity.builder()
-                .role(role)
-                .path(new ArrayList<>())
-                .build();
+        RoleEntity roleEntity = RoleMapper.toEntity(role);
 
         roleRepository.save(roleEntity);
 
@@ -47,13 +44,7 @@ public class RoleService {
 
         List<RoleEntity> roleEntityList = roleRepository.findAllByRoleIn(roles);
 
-        return roleEntityList.stream().map(
-                role -> GetRoleResponseDTO.builder()
-                        .id(role.getId())
-                        .role(role.getRole())
-                        .allowedPaths(role.getPath())
-                        .build()
-        ).toList();
+        return roleEntityList.stream().map(RoleMapper::toDto).toList();
     }
 
     public GeneralMessageResponseDTO deleteRole(String role) {

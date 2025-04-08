@@ -4,17 +4,15 @@ import com.manish.common.dto.GeneralMessageResponseDTO;
 import com.manish.common.dto.GetUserResponseDTO;
 import com.manish.common.dto.UpdateUserRequestDTO;
 import com.manish.common.dto.UserSignUpRequestDTO;
-import com.manish.user.entity.RoleEntity;
 import com.manish.user.entity.UserEntity;
 import com.manish.user.exception.ApplicationException;
+import com.manish.user.mapper.UserMapper;
 import com.manish.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,20 +23,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public GeneralMessageResponseDTO addUser(UserSignUpRequestDTO userSignUpRequestDTO, MultipartFile profilePicture) {
-        log.info("Add User request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
+    public GeneralMessageResponseDTO addUser(UserSignUpRequestDTO userSignUpRequestDTO) {
+        log.info("Add User request received for user-data {}", userSignUpRequestDTO);
 
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userSignUpRequestDTO.getEmail());
         if(userEntityOptional.isPresent()) throw new ApplicationException("User already exists");
 
-        UserEntity userEntity = UserEntity.builder()
-                .firstName(userSignUpRequestDTO.getFirstName())
-                .lastName(userSignUpRequestDTO.getLastName())
-                .email(userSignUpRequestDTO.getEmail())
-                .hashPassword(passwordEncoder.encode(userSignUpRequestDTO.getPassword()))
-                .bio(userSignUpRequestDTO.getBio())
-                .profilePicture("https://modii.org/wp-content/uploads/2020/12/random.png") // TODO :: call picture service and get picture url string
-                .build();
+        UserEntity userEntity = UserMapper.toEntity(
+                userSignUpRequestDTO,
+                passwordEncoder.encode(userSignUpRequestDTO.getPassword()),
+                "https://modii.org/wp-content/uploads/2020/12/random.png"
+        );
 
         userRepository.save(userEntity);
         return new GeneralMessageResponseDTO("User sign up request received");
@@ -46,39 +41,21 @@ public class UserService {
 
     public List<GetUserResponseDTO> getUser(List<String> userIds) {
         log.info("Get User request received for user-id {}", userIds);
-
         List<UserEntity> userEntityList = userRepository.findAllById(userIds);
-
-        return userEntityList.stream()
-                .map(
-                        userEntity -> GetUserResponseDTO
-                                .builder()
-                                .id(userEntity.getId())
-                                .firstName(userEntity.getFirstName())
-                                .lastName(userEntity.getLastName())
-                                .email(userEntity.getEmail())
-                                .bio(userEntity.getBio())
-                                .profilePicture(userEntity.getProfilePicture())
-                                .roles(userEntity.getRoles().stream().map(RoleEntity::getRole).toList())
-                                .build()
-                ).toList();
+        return userEntityList.stream().map(UserMapper::toDTO).toList();
     }
 
-    public GeneralMessageResponseDTO updateUser(UpdateUserRequestDTO updateUserRequestDTO, MultipartFile profilePicture) {
-        log.info("Update User request received for user-data {} and file-data {}", updateUserRequestDTO, profilePicture);
+    public GeneralMessageResponseDTO updateUser(UpdateUserRequestDTO updateUserRequestDTO) {
+        log.info("Update User request received for user-data {}", updateUserRequestDTO);
 
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(updateUserRequestDTO.getEmail());
         if(userEntityOptional.isEmpty()) throw new ApplicationException("User not found");
 
-        UserEntity userEntity = userEntityOptional.get();
-        userEntity.setFirstName(updateUserRequestDTO.getFirstName());
-        userEntity.setLastName(updateUserRequestDTO.getLastName());
-        userEntity.setEmail(updateUserRequestDTO.getEmail());
-        userEntity.setBio(updateUserRequestDTO.getBio());
-        userEntity.setProfilePicture("https://modii.org/wp-content/uploads/2020/12/random.png"); // TODO :: call picture service and get picture url string
-        userEntity.setRoles(updateUserRequestDTO.getRoles().stream().map(role -> RoleEntity.builder().role(role).build()).toList());
-        userEntity.setUpdatedAt(LocalDateTime.now());
-
+        UserEntity userEntity = UserMapper.toEntity(
+                userEntityOptional.get(),
+                updateUserRequestDTO,
+                "https://modii.org/wp-content/uploads/2020/12/random.png"
+        );
         userRepository.save(userEntity);
 
         return new GeneralMessageResponseDTO("User update request received");

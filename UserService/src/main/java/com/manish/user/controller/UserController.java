@@ -22,10 +22,9 @@ public class UserController {
     private final AccessService accessService;
 
     @PostMapping("/api/v1/user/add-user")
-    public ResponseEntity<GeneralMessageResponseDTO> addUser(@RequestPart("user-data") UserSignUpRequestDTO userSignUpRequestDTO,
-                                                             @RequestPart("file-data") MultipartFile profilePicture) {
-        log.info("Add User request received for user-data {} and file-data {}", userSignUpRequestDTO, profilePicture);
-        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO, profilePicture), HttpStatus.CREATED);
+    public ResponseEntity<GeneralMessageResponseDTO> addUser(@ModelAttribute UserSignUpRequestDTO userSignUpRequestDTO) {
+        log.info("Add User request received for user-data {}", userSignUpRequestDTO);
+        return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/v1/user/get-user")
@@ -35,10 +34,9 @@ public class UserController {
     }
 
     @PutMapping("/api/v1/user/update-user")
-    public ResponseEntity<GeneralMessageResponseDTO> updateUser(@RequestPart("user-data") UpdateUserRequestDTO updateUserRequestDTO,
-                                                                @RequestPart("file-data") MultipartFile profilePicture) {
-        log.info("Update User request received for user-data {} and file-data {}", updateUserRequestDTO, profilePicture);
-        return new ResponseEntity<>(userService.updateUser(updateUserRequestDTO, profilePicture), HttpStatus.OK);
+    public ResponseEntity<GeneralMessageResponseDTO> updateUser(@ModelAttribute UpdateUserRequestDTO updateUserRequestDTO) {
+        log.info("Update User request received for user-data {}", updateUserRequestDTO);
+        return new ResponseEntity<>(userService.updateUser(updateUserRequestDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/v1/user/delete-user")

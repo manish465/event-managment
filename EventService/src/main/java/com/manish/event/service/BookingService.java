@@ -6,6 +6,7 @@ import com.manish.common.dto.GetBookingResponseDTO;
 import com.manish.event.entity.BookingEntity;
 import com.manish.common.enums.BookingStatus;
 import com.manish.event.exception.ApplicationException;
+import com.manish.event.mapper.BookingMapper;
 import com.manish.event.repository.BookingRepository;
 import com.manish.event.utils.CompareStringUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,7 @@ public class BookingService {
         if(CompareStringUtils.isStingEmpty(addBookingEventDTO.getEventId()))
             throw new ApplicationException("Event id is required");
 
-        bookingRepository.save(
-                BookingEntity.builder()
-                        .eventId(addBookingEventDTO.getEventId())
-                        .userId(addBookingEventDTO.getUserId())
-                        .bookingStatus(BookingStatus.CONFIRMED)
-                        .build()
-        );
+        bookingRepository.save(BookingMapper.toEntity(addBookingEventDTO));
 
         return new GeneralMessageResponseDTO("Event booked successfully");
     }
@@ -51,16 +46,7 @@ public class BookingService {
     public List<GetBookingResponseDTO> getEventBooking(String eventId) {
         log.info("Get Event booking request received for event-id {}", eventId);
 
-        return bookingRepository.findAllByEventId(eventId).stream().map(
-                booking -> GetBookingResponseDTO.builder()
-                        .id(booking.getId())
-                        .eventId(booking.getEventId())
-                        .userId(booking.getUserId())
-                        .bookingStatus(booking.getBookingStatus())
-                        .createdAt(booking.getCreatedAt())
-                        .updatedAt(booking.getUpdatedAt())
-                        .build()
-        ).toList();
+        return bookingRepository.findAllByEventId(eventId).stream().map(BookingMapper::toDto).toList();
     }
 
     public GeneralMessageResponseDTO deleteAllEventsByEventId(String eventId) {
