@@ -1,6 +1,11 @@
 package com.manish.user.controller;
 
-import com.manish.common.dto.*;
+import com.manish.common.request.UpdateUserRequestDTO;
+import com.manish.common.request.UserAccessRequestDTO;
+import com.manish.common.request.UserSignUpRequestDTO;
+import com.manish.common.response.GeneralMessageResponseDTO;
+import com.manish.common.response.GetRoleResponseDTO;
+import com.manish.common.response.GetUserResponseDTO;
 import com.manish.user.service.AccessService;
 import com.manish.user.service.RoleService;
 import com.manish.user.service.UserService;
@@ -9,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

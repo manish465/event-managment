@@ -1,7 +1,7 @@
 package com.manish.user.service;
 
-import com.manish.common.dto.GeneralMessageResponseDTO;
-import com.manish.common.dto.UserAccessRequestDTO;
+import com.manish.common.response.GeneralMessageResponseDTO;
+import com.manish.common.request.UserAccessRequestDTO;
 import com.manish.user.entity.RoleEntity;
 import com.manish.user.exception.ApplicationException;
 import com.manish.user.repository.RoleRepository;

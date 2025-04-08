@@ -1,8 +1,8 @@
 package com.manish.event.mapper;
 
-import com.manish.common.dto.AddEventRequestDTO;
-import com.manish.common.dto.GetEventResponseDTO;
-import com.manish.common.dto.UpdateEventRequestDTO;
+import com.manish.common.request.AddEventRequestDTO;
+import com.manish.common.response.GetEventResponseDTO;
+import com.manish.common.request.UpdateEventRequestDTO;
 import com.manish.event.entity.EventEntity;
 
 import java.util.ArrayList;

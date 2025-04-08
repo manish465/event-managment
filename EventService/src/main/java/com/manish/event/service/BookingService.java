@@ -1,10 +1,8 @@
 package com.manish.event.service;
 
-import com.manish.common.dto.GeneralMessageResponseDTO;
-import com.manish.common.dto.AddBookingEventDTO;
-import com.manish.common.dto.GetBookingResponseDTO;
-import com.manish.event.entity.BookingEntity;
-import com.manish.common.enums.BookingStatus;
+import com.manish.common.response.GeneralMessageResponseDTO;
+import com.manish.common.request.AddBookingEventRequestDTO;
+import com.manish.common.response.GetBookingResponseDTO;
 import com.manish.event.exception.ApplicationException;
 import com.manish.event.mapper.BookingMapper;
 import com.manish.event.repository.BookingRepository;
@@ -21,16 +19,16 @@ import java.util.List;
 public class BookingService {
     private final BookingRepository bookingRepository;
 
-    public GeneralMessageResponseDTO addEventBooking(AddBookingEventDTO addBookingEventDTO) {
-        log.info("Book Event request received for user-data {}", addBookingEventDTO);
+    public GeneralMessageResponseDTO addEventBooking(AddBookingEventRequestDTO addBookingEventRequestDTO) {
+        log.info("Book Event request received for user-data {}", addBookingEventRequestDTO);
 
-        if(CompareStringUtils.isStingEmpty(addBookingEventDTO.getUserId()))
+        if(CompareStringUtils.isStingEmpty(addBookingEventRequestDTO.getUserId()))
             throw new ApplicationException("User id is required");
 
-        if(CompareStringUtils.isStingEmpty(addBookingEventDTO.getEventId()))
+        if(CompareStringUtils.isStingEmpty(addBookingEventRequestDTO.getEventId()))
             throw new ApplicationException("Event id is required");
 
-        bookingRepository.save(BookingMapper.toEntity(addBookingEventDTO));
+        bookingRepository.save(BookingMapper.toEntity(addBookingEventRequestDTO));
 
         return new GeneralMessageResponseDTO("Event booked successfully");
     }

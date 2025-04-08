@@ -1,8 +1,8 @@
 package com.manish.user.mapper;
 
-import com.manish.common.dto.GetUserResponseDTO;
-import com.manish.common.dto.UpdateUserRequestDTO;
-import com.manish.common.dto.UserSignUpRequestDTO;
+import com.manish.common.response.GetUserResponseDTO;
+import com.manish.common.request.UpdateUserRequestDTO;
+import com.manish.common.request.UserSignUpRequestDTO;
 import com.manish.user.entity.RoleEntity;
 import com.manish.user.entity.UserEntity;
 

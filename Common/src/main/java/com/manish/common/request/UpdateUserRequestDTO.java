@@ -1,4 +1,4 @@
-package com.manish.common.dto;
+package com.manish.common.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

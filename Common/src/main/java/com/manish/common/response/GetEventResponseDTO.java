@@ -1,10 +1,9 @@
-package com.manish.common.dto;
+package com.manish.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddEventRequestDTO {
+public class GetEventResponseDTO {
+    private String id;
     private String organizerId;
     private String eventName;
     private String description;
@@ -22,5 +22,7 @@ public class AddEventRequestDTO {
     private LocalDateTime bookingStartDatetime;
     private LocalDateTime bookingEndDatetime;
     private Integer maxCapacity;
-    private List<MultipartFile> eventImages;
+    private List<String> eventImages;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

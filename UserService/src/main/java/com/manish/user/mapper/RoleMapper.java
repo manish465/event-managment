@@ -1,6 +1,6 @@
 package com.manish.user.mapper;
 
-import com.manish.common.dto.GetRoleResponseDTO;
+import com.manish.common.response.GetRoleResponseDTO;
 import com.manish.user.entity.RoleEntity;
 
 import java.util.ArrayList;

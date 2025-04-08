@@ -1,8 +1,8 @@
 package com.manish.event.controller;
 
-import com.manish.common.dto.GeneralMessageResponseDTO;
-import com.manish.common.dto.AddBookingEventDTO;
-import com.manish.common.dto.GetBookingResponseDTO;
+import com.manish.common.response.GeneralMessageResponseDTO;
+import com.manish.common.request.AddBookingEventRequestDTO;
+import com.manish.common.response.GetBookingResponseDTO;
 import com.manish.event.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +19,9 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/api/v1/booking/add-event-booking")
-    public ResponseEntity<GeneralMessageResponseDTO> addEventBooking(@RequestBody AddBookingEventDTO addBookingEventDTO) {
-        log.info("Book Event request received for user-data {}", addBookingEventDTO);
-        return ResponseEntity.ok(bookingService.addEventBooking(addBookingEventDTO));
+    public ResponseEntity<GeneralMessageResponseDTO> addEventBooking(@RequestBody AddBookingEventRequestDTO addBookingEventRequestDTO) {
+        log.info("Book Event request received for user-data {}", addBookingEventRequestDTO);
+        return ResponseEntity.ok(bookingService.addEventBooking(addBookingEventRequestDTO));
     }
 
     @PutMapping("/api/v1/booking/cancel-event-booking")

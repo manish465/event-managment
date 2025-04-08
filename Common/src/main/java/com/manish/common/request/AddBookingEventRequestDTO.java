@@ -1,4 +1,4 @@
-package com.manish.common.dto;
+package com.manish.common.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserSignInRequestDTO {
-    private String email;
-    private String password;
+public class AddBookingEventRequestDTO {
+    private String eventId;
+    private String userId;
 }

@@ -1,11 +1,11 @@
 package com.manish.user.controller;
 
-import com.manish.common.dto.UserSignInRequestDTO;
-import com.manish.common.dto.UserSignUpRequestDTO;
-import com.manish.common.dto.UserVerifyResponseDTO;
+import com.manish.common.request.UserSignInRequestDTO;
+import com.manish.common.request.UserSignUpRequestDTO;
+import com.manish.common.request.UserVerifyResponseDTO;
 import com.manish.user.service.AuthService;
 import com.manish.user.service.UserService;
-import com.manish.common.dto.GeneralMessageResponseDTO;
+import com.manish.common.response.GeneralMessageResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

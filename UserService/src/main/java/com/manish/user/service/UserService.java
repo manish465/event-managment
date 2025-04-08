@@ -1,9 +1,9 @@
 package com.manish.user.service;
 
-import com.manish.common.dto.GeneralMessageResponseDTO;
-import com.manish.common.dto.GetUserResponseDTO;
-import com.manish.common.dto.UpdateUserRequestDTO;
-import com.manish.common.dto.UserSignUpRequestDTO;
+import com.manish.common.response.GeneralMessageResponseDTO;
+import com.manish.common.response.GetUserResponseDTO;
+import com.manish.common.request.UpdateUserRequestDTO;
+import com.manish.common.request.UserSignUpRequestDTO;
 import com.manish.user.entity.UserEntity;
 import com.manish.user.exception.ApplicationException;
 import com.manish.user.mapper.UserMapper;
