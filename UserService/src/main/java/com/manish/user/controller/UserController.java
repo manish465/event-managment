@@ -9,10 +9,12 @@ import com.manish.common.response.GetUserResponseDTO;
 import com.manish.user.service.AccessService;
 import com.manish.user.service.RoleService;
 import com.manish.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,13 +22,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
     private final AccessService accessService;
 
     @PostMapping("/api/v1/user/add-user")
-    public ResponseEntity<GeneralMessageResponseDTO> addUser(@ModelAttribute UserSignUpRequestDTO userSignUpRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> addUser(@ModelAttribute @Valid UserSignUpRequestDTO userSignUpRequestDTO) {
         log.info("Add User request received for user-data {}", userSignUpRequestDTO);
         return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO), HttpStatus.CREATED);
     }
@@ -38,7 +41,7 @@ public class UserController {
     }
 
     @PutMapping("/api/v1/user/update-user")
-    public ResponseEntity<GeneralMessageResponseDTO> updateUser(@ModelAttribute UpdateUserRequestDTO updateUserRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> updateUser(@ModelAttribute @Valid UpdateUserRequestDTO updateUserRequestDTO) {
         log.info("Update User request received for user-data {}", updateUserRequestDTO);
         return new ResponseEntity<>(userService.updateUser(updateUserRequestDTO), HttpStatus.OK);
     }
@@ -80,13 +83,13 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/user/add-access")
-    public ResponseEntity<GeneralMessageResponseDTO> addAccess(@RequestBody UserAccessRequestDTO userAccessRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> addAccess(@RequestBody @Valid UserAccessRequestDTO userAccessRequestDTO) {
         log.info("Add Access request received for access-data {}", userAccessRequestDTO);
         return new ResponseEntity<>(accessService.addAccess(userAccessRequestDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/api/v1/user/delete-access")
-    public ResponseEntity<GeneralMessageResponseDTO> deleteAccess(@RequestBody UserAccessRequestDTO userAccessRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> deleteAccess(@RequestBody @Valid UserAccessRequestDTO userAccessRequestDTO) {
         log.info("Delete Access request received for access-data {}", userAccessRequestDTO);
         return new ResponseEntity<>(accessService.deleteAccess(userAccessRequestDTO), HttpStatus.OK);
     }

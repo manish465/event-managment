@@ -5,10 +5,12 @@ import com.manish.common.request.AddEventRequestDTO;
 import com.manish.common.response.GetEventResponseDTO;
 import com.manish.common.request.UpdateEventRequestDTO;
 import com.manish.event.service.EventService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,11 +18,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class EventController {
     private final EventService eventService;
 
     @PostMapping("/api/v1/event/add-event")
-    public ResponseEntity<GeneralMessageResponseDTO> addEvent(@ModelAttribute AddEventRequestDTO addEventRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> addEvent(@ModelAttribute @Valid AddEventRequestDTO addEventRequestDTO) {
         log.info("Add Event request received for user-data {}", addEventRequestDTO);
         return new ResponseEntity<>(eventService.addEvent(addEventRequestDTO), HttpStatus.CREATED);
     }
@@ -32,13 +35,13 @@ public class EventController {
     }
 
     @PutMapping("/api/v1/event/update-event")
-    public ResponseEntity<GeneralMessageResponseDTO> updateEvent(@ModelAttribute UpdateEventRequestDTO updateEventRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> updateEvent(@ModelAttribute @Valid UpdateEventRequestDTO updateEventRequestDTO) {
         log.info("Update Event request received for user-data {}", updateEventRequestDTO);
         return new ResponseEntity<>(eventService.updateEvent(updateEventRequestDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/api/v1/event/delete-event")
-    public ResponseEntity<GeneralMessageResponseDTO> deleteEvent(@RequestBody List<String> eventIds) {
+    public ResponseEntity<GeneralMessageResponseDTO> deleteEvent(@RequestBody @Valid List<String> eventIds) {
         log.info("Delete Event request received for event-ids {}", eventIds);
         return new ResponseEntity<>(eventService.deleteEvent(eventIds), HttpStatus.OK);
     }

@@ -6,27 +6,30 @@ import com.manish.common.request.UserVerifyResponseDTO;
 import com.manish.user.service.AuthService;
 import com.manish.user.service.UserService;
 import com.manish.common.response.GeneralMessageResponseDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
     @PostMapping("/api/v1/auth/sign-up")
-    public ResponseEntity<GeneralMessageResponseDTO> singUp(@ModelAttribute UserSignUpRequestDTO userSignUpRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> singUp(@ModelAttribute @Valid UserSignUpRequestDTO userSignUpRequestDTO) {
         log.info("User sign up request received for user-data {}", userSignUpRequestDTO);
         return new ResponseEntity<>(userService.addUser(userSignUpRequestDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/v1/auth/sign-in")
-    public ResponseEntity<GeneralMessageResponseDTO> signIn(@RequestBody UserSignInRequestDTO userSignInRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> signIn(@RequestBody @Valid UserSignInRequestDTO userSignInRequestDTO) {
         log.info("User sign in request received for user-data {}", userSignInRequestDTO);
         return ResponseEntity.ok(authService.signIn(userSignInRequestDTO));
     }

@@ -4,10 +4,12 @@ import com.manish.common.response.GeneralMessageResponseDTO;
 import com.manish.common.request.AddBookingEventRequestDTO;
 import com.manish.common.response.GetBookingResponseDTO;
 import com.manish.event.service.BookingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +17,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/api/v1/booking/add-event-booking")
-    public ResponseEntity<GeneralMessageResponseDTO> addEventBooking(@RequestBody AddBookingEventRequestDTO addBookingEventRequestDTO) {
+    public ResponseEntity<GeneralMessageResponseDTO> addEventBooking(@RequestBody @Valid AddBookingEventRequestDTO addBookingEventRequestDTO) {
         log.info("Book Event request received for user-data {}", addBookingEventRequestDTO);
         return ResponseEntity.ok(bookingService.addEventBooking(addBookingEventRequestDTO));
     }
