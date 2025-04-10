@@ -121,4 +121,9 @@ public class EventService {
 
         return new GeneralMessageResponseDTO("All event deleted successfully");
     }
+
+    public Boolean checkEventsExist(List<String> eventIds) {
+        log.info("Check Event exist request received for event-ids {}", eventIds);
+        return eventRepository.countExistingIds(eventIds) == eventIds.size();
+    }
 }

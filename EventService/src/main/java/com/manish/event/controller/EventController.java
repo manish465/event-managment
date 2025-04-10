@@ -49,6 +49,12 @@ public class EventController {
         return new ResponseEntity<>(eventService.deleteAllEvent(), HttpStatus.OK);
     }
 
+    @GetMapping("/api/v1/event/check-event-exist")
+    public ResponseEntity<Boolean> checkEventsExist(List<String> eventIds) {
+        log.info("Check Event exist request received for event-ids {}", eventIds);
+        return new ResponseEntity<>(eventService.checkEventsExist(eventIds), HttpStatus.OK);
+    }
+
     @GetMapping("/api/v1/event/health-check")
     public ResponseEntity<GeneralMessageResponseDTO> healthCheck() {
         log.info("Event health check request received");
