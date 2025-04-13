@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "role-table")
 public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

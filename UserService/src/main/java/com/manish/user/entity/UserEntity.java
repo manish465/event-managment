@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "user-table")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

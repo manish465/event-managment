@@ -3,10 +3,8 @@ package com.manish.event.service;
 import com.manish.common.response.GeneralMessageResponseDTO;
 import com.manish.common.request.AddBookingEventRequestDTO;
 import com.manish.common.response.GetBookingResponseDTO;
-import com.manish.event.exception.ApplicationException;
 import com.manish.event.mapper.BookingMapper;
 import com.manish.event.repository.BookingRepository;
-import com.manish.event.utils.CompareStringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,12 +19,6 @@ public class BookingService {
 
     public GeneralMessageResponseDTO addEventBooking(AddBookingEventRequestDTO addBookingEventRequestDTO) {
         log.info("Book Event request received for user-data {}", addBookingEventRequestDTO);
-
-        if(CompareStringUtils.isStingEmpty(addBookingEventRequestDTO.getUserId()))
-            throw new ApplicationException("User id is required");
-
-        if(CompareStringUtils.isStingEmpty(addBookingEventRequestDTO.getEventId()))
-            throw new ApplicationException("Event id is required");
 
         bookingRepository.save(BookingMapper.toEntity(addBookingEventRequestDTO));
 

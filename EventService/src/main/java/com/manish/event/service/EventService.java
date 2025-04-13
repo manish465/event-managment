@@ -5,11 +5,8 @@ import com.manish.common.request.AddEventRequestDTO;
 import com.manish.common.response.GetEventResponseDTO;
 import com.manish.common.request.UpdateEventRequestDTO;
 import com.manish.event.entity.EventEntity;
-import com.manish.event.exception.ApplicationException;
 import com.manish.event.mapper.EventMapper;
 import com.manish.event.repository.EventRepository;
-import com.manish.event.utils.CompareDateTimeUtils;
-import com.manish.event.utils.CompareStringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,35 +23,6 @@ public class EventService {
     public GeneralMessageResponseDTO addEvent(AddEventRequestDTO addEventRequestDTO) {
         log.info("Add Event request received for user-data {}", addEventRequestDTO);
 
-        if(CompareStringUtils.isStingEmpty(addEventRequestDTO.getOrganizerId()))
-            throw new ApplicationException("Organizer id is required");
-
-        if(CompareStringUtils.isStingEmpty(addEventRequestDTO.getEventName()))
-            throw new ApplicationException("Event name id is required");
-
-        if(CompareDateTimeUtils.isDateTimeEmpty(addEventRequestDTO.getStartDateTime()))
-            throw new ApplicationException("Start date time is required");
-        if(CompareDateTimeUtils.isDateTimeEmpty(addEventRequestDTO.getEndDatetime()))
-            throw new ApplicationException("End date time is required");
-        if(CompareDateTimeUtils.isDateTimeBefore(addEventRequestDTO.getStartDateTime(), addEventRequestDTO.getEndDatetime()))
-            throw new ApplicationException("Start date time should be before end date time");
-
-        if(CompareDateTimeUtils.isDateTimeEmpty(addEventRequestDTO.getBookingStartDatetime()))
-            throw new ApplicationException("Booking start date time is required");
-        if(CompareDateTimeUtils.isDateTimeEmpty(addEventRequestDTO.getBookingEndDatetime()))
-            throw new ApplicationException("Booking end date time is required");
-        if(CompareDateTimeUtils.isDateTimeBefore(
-                addEventRequestDTO.getBookingStartDatetime(),
-                addEventRequestDTO.getBookingEndDatetime()))
-            throw new ApplicationException("Booking start date time should be before booking end date time");
-
-        if(CompareDateTimeUtils.isDateTimeBefore(
-                addEventRequestDTO.getBookingEndDatetime(),
-                addEventRequestDTO.getStartDateTime()))
-            throw new ApplicationException("Booking end date time should be before start date time");
-
-        if(addEventRequestDTO.getMaxCapacity() <= 0) throw new ApplicationException("Max capacity is required");
-
         List<String> eventImagesURL = List.of("https://modii.org/wp-content/uploads/2020/12/random.png"); // TODO :: call picture service and get picture url string
         eventRepository.save(EventMapper.toEntity(addEventRequestDTO, eventImagesURL));
 
@@ -70,34 +38,6 @@ public class EventService {
         log.info("Update Event request received for user-data {}", updateEventRequestDTO);
 
         Optional<EventEntity> optionalEventEntity = eventRepository.findById(updateEventRequestDTO.getId());
-
-        if(optionalEventEntity.isEmpty()) throw new ApplicationException("Event not found");
-
-        if(CompareStringUtils.isStingEmpty(updateEventRequestDTO.getEventName()))
-            throw new ApplicationException("Event name id is required");
-
-        if(CompareDateTimeUtils.isDateTimeEmpty(updateEventRequestDTO.getStartDateTime()))
-            throw new ApplicationException("Start date time is required");
-        if(CompareDateTimeUtils.isDateTimeEmpty(updateEventRequestDTO.getEndDateTime()))
-            throw new ApplicationException("End date time is required");
-        if(CompareDateTimeUtils.isDateTimeBefore(updateEventRequestDTO.getStartDateTime(), updateEventRequestDTO.getEndDateTime()))
-            throw new ApplicationException("Start date time should be before end date time");
-
-        if(CompareDateTimeUtils.isDateTimeEmpty(updateEventRequestDTO.getBookingStartDateTime()))
-            throw new ApplicationException("Booking start date time is required");
-        if(CompareDateTimeUtils.isDateTimeEmpty(updateEventRequestDTO.getBookingEndDateTime()))
-            throw new ApplicationException("Booking end date time is required");
-        if(CompareDateTimeUtils.isDateTimeBefore(
-                updateEventRequestDTO.getBookingStartDateTime(),
-                updateEventRequestDTO.getBookingEndDateTime()))
-            throw new ApplicationException("Booking start date time should be before booking end date time");
-
-        if(CompareDateTimeUtils.isDateTimeBefore(
-                updateEventRequestDTO.getBookingEndDateTime(),
-                updateEventRequestDTO.getStartDateTime()))
-            throw new ApplicationException("Booking end date time should be before start date time");
-
-        if(updateEventRequestDTO.getMaxCapacity() <= 0) throw new ApplicationException("Max capacity is required");
 
         List<String> eventImagesURL = List.of("https://modii.org/wp-content/uploads/2020/12/random.png"); // TODO :: call picture service and get picture url string
 

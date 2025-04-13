@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
-    @Query("SELECT COUNT(r) > 0 FROM RoleEntity r JOIN r.path p WHERE p = :path AND r.id IN :roleIds")
+    @Query("SELECT COUNT(r) > 0 FROM role-table r JOIN r.path p WHERE p = :path AND r.id IN :roleIds")
     boolean existsRoleWithPathAndIdIn(String path, List<Long> roleIds);
 
     Optional<RoleEntity> findByRole(String role);

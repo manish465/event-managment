@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "booking-table")
 public class BookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
