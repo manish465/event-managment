@@ -23,14 +23,7 @@ public class EventReviewService {
     public GeneralMessageResponseDTO addEventReview(AddEventReviewRequestDTO addEventReviewRequestDTO) {
         log.info("Add Event review request received for event-data {}", addEventReviewRequestDTO);
 
-        EventReview eventReview = EventReview.builder()
-                .eventId(addEventReviewRequestDTO.getEventId())
-                .userId(addEventReviewRequestDTO.getUserId())
-                .rating(addEventReviewRequestDTO.getRating())
-                .reviewText(addEventReviewRequestDTO.getReviewText())
-                .build();
-
-        eventReviewRepository.save(eventReview);
+        eventReviewRepository.save(EventReviewMapper.toEntity(addEventReviewRequestDTO));
 
         return new GeneralMessageResponseDTO("Event review added successfully");
     }
@@ -56,8 +49,30 @@ public class EventReviewService {
     }
 
     public GeneralMessageResponseDTO deleteEventReview(String reviewId) {
+        log.info("Delete Event review request received for review-id {}", reviewId);
+
+        Optional<EventReview> eventReview = eventReviewRepository.findById(reviewId);
+        if (eventReview.isEmpty())
+            return new GeneralMessageResponseDTO("Event review not found");
+
+        eventReviewRepository.delete(eventReview.get());
+
+        return new GeneralMessageResponseDTO("Event review deleted successfully");
+    }
+
+    public GeneralMessageResponseDTO deleteEventReviewByEventId(String eventId) {
+        log.info("Delete Event review request received for event-id {}", eventId);
+
+        eventReviewRepository.deleteByEventId(eventId);
+
+        return new GeneralMessageResponseDTO("Event review deleted successfully");
     }
 
     public GeneralMessageResponseDTO deleteAllEventReview() {
+        log.info("Delete All Event review request received");
+
+        eventReviewRepository.deleteAll();
+
+        return new GeneralMessageResponseDTO("All event review deleted successfully");
     }
 }

@@ -25,7 +25,7 @@ public class EventReviewController {
     @PostMapping("/api/v1/event-review/add-event-review")
     public ResponseEntity<GeneralMessageResponseDTO> addEventReview(@RequestBody @Valid AddEventReviewRequestDTO addEventReviewRequestDTO) {
         log.info("Add Event review request received for event-data {}", addEventReviewRequestDTO);
-        return ResponseEntity.ok(eventReviewService.addEventReview(addEventReviewRequestDTO));
+        return new ResponseEntity<>(eventReviewService.addEventReview(addEventReviewRequestDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("api/v1/event-review/get-event-review")
@@ -44,6 +44,12 @@ public class EventReviewController {
     public ResponseEntity<GeneralMessageResponseDTO> deleteEventReview(@RequestParam String reviewId) {
         log.info("Delete Event review request received for review-id {}", reviewId);
         return ResponseEntity.ok(eventReviewService.deleteEventReview(reviewId));
+    }
+
+    @DeleteMapping("api/v1/event-review/delete-event-review")
+    public ResponseEntity<GeneralMessageResponseDTO> deleteEventReviewByEventId(@RequestParam String eventId) {
+        log.info("Delete Event review request received for event-id {}", eventId);
+        return ResponseEntity.ok(eventReviewService.deleteEventReviewByEventId(eventId));
     }
 
     @DeleteMapping("api/v1/event-review/delete-all-event-review")

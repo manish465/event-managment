@@ -2,7 +2,7 @@ package com.manish.user.controller;
 
 import com.manish.common.request.UserSignInRequestDTO;
 import com.manish.common.request.UserSignUpRequestDTO;
-import com.manish.common.request.UserVerifyResponseDTO;
+import com.manish.common.response.UserVerifyResponseDTO;
 import com.manish.user.service.AuthService;
 import com.manish.user.service.UserService;
 import com.manish.common.response.GeneralMessageResponseDTO;

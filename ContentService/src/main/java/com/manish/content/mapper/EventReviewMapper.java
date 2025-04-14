@@ -1,9 +1,19 @@
 package com.manish.content.mapper;
 
+import com.manish.common.request.AddEventReviewRequestDTO;
 import com.manish.common.response.GetEventReviewResponseDTO;
 import com.manish.content.entity.EventReview;
 
 public class EventReviewMapper {
+    public static EventReview toEntity(AddEventReviewRequestDTO addEventReviewRequestDTO) {
+        return EventReview.builder()
+                .eventId(addEventReviewRequestDTO.getEventId())
+                .userId(addEventReviewRequestDTO.getUserId())
+                .rating(addEventReviewRequestDTO.getRating())
+                .reviewText(addEventReviewRequestDTO.getReviewText())
+                .build();
+    }
+
     public static GetEventReviewResponseDTO toDto(EventReview eventReview) {
         return GetEventReviewResponseDTO.builder()
                 .id(eventReview.getId())
@@ -15,4 +25,6 @@ public class EventReviewMapper {
                 .updatedAt(eventReview.getUpdatedAt())
                 .build();
     }
+
+
 }

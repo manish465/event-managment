@@ -11,8 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserVerifyResponseDTO {
+public class AddEventUpdateRequestDTO {
+    @NotNull(message = "Event id is required")
+    @NotBlank(message = "Event id is required")
+    private String eventId;
     @NotNull(message = "User id is required")
     @NotBlank(message = "User id is required")
-    private String userID;
+    private String userId;
+    @NotNull(message = "Update text is required")
+    @NotBlank(message = "Update text is required")
+    private String updateText;
 }
