@@ -4,7 +4,7 @@ import com.manish.common.request.AddEventReviewRequestDTO;
 import com.manish.common.request.UpdateEventReviewRequestDTO;
 import com.manish.common.response.GeneralMessageResponseDTO;
 import com.manish.common.response.GetEventReviewResponseDTO;
-import com.manish.content.entity.EventReview;
+import com.manish.content.entity.EventReviewEntity;
 import com.manish.content.mapper.EventReviewMapper;
 import com.manish.content.repository.EventReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class EventReviewService {
     public GeneralMessageResponseDTO updateEventReview(UpdateEventReviewRequestDTO updateEventReviewRequestDTO) {
         log.info("Update Event review request received for event-data {}", updateEventReviewRequestDTO);
 
-        Optional<EventReview> eventReview = eventReviewRepository.findById(updateEventReviewRequestDTO.getId());
+        Optional<EventReviewEntity> eventReview = eventReviewRepository.findById(updateEventReviewRequestDTO.getId());
         if (eventReview.isEmpty())
             return new GeneralMessageResponseDTO("Event review not found");
 
@@ -51,7 +51,7 @@ public class EventReviewService {
     public GeneralMessageResponseDTO deleteEventReview(String reviewId) {
         log.info("Delete Event review request received for review-id {}", reviewId);
 
-        Optional<EventReview> eventReview = eventReviewRepository.findById(reviewId);
+        Optional<EventReviewEntity> eventReview = eventReviewRepository.findById(reviewId);
         if (eventReview.isEmpty())
             return new GeneralMessageResponseDTO("Event review not found");
 

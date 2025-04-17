@@ -4,7 +4,7 @@ import com.manish.common.request.AddFeedPostRequestDTO;
 import com.manish.common.request.UpdateFeedPostRequestDTO;
 import com.manish.common.response.GeneralMessageResponseDTO;
 import com.manish.common.response.GetFeedPostResponseDTO;
-import com.manish.content.entity.FeedPost;
+import com.manish.content.entity.FeedPostEntity;
 import com.manish.content.mapper.FeedPostMapper;
 import com.manish.content.repository.FeedPostRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class FeedPostService {
     public GeneralMessageResponseDTO updateFeedPost(UpdateFeedPostRequestDTO updateFeedPostRequestDTO) {
         log.info("Update Feed post request received for feed-data {}", updateFeedPostRequestDTO);
 
-        Optional<FeedPost> feedPostOptional = feedPostRepository
+        Optional<FeedPostEntity> feedPostOptional = feedPostRepository
                 .findById(updateFeedPostRequestDTO.getId());
 
         if (feedPostOptional.isEmpty())
@@ -55,7 +55,7 @@ public class FeedPostService {
     public GeneralMessageResponseDTO deleteFeedPost(String postId) {
         log.info("Delete Feed post request received for post-id {}", postId);
 
-        Optional<FeedPost> feedPostOptional = feedPostRepository
+        Optional<FeedPostEntity> feedPostOptional = feedPostRepository
                 .findById(postId);
 
         if (feedPostOptional.isEmpty())

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EventReview {
+public class EventReviewEntity {
     @Id
     @Field(name = "event-review-id")
     private String id;

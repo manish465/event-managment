@@ -2,11 +2,11 @@ package com.manish.content.mapper;
 
 import com.manish.common.request.AddEventReviewRequestDTO;
 import com.manish.common.response.GetEventReviewResponseDTO;
-import com.manish.content.entity.EventReview;
+import com.manish.content.entity.EventReviewEntity;
 
 public class EventReviewMapper {
-    public static EventReview toEntity(AddEventReviewRequestDTO addEventReviewRequestDTO) {
-        return EventReview.builder()
+    public static EventReviewEntity toEntity(AddEventReviewRequestDTO addEventReviewRequestDTO) {
+        return EventReviewEntity.builder()
                 .eventId(addEventReviewRequestDTO.getEventId())
                 .userId(addEventReviewRequestDTO.getUserId())
                 .rating(addEventReviewRequestDTO.getRating())
@@ -14,15 +14,15 @@ public class EventReviewMapper {
                 .build();
     }
 
-    public static GetEventReviewResponseDTO toDto(EventReview eventReview) {
+    public static GetEventReviewResponseDTO toDto(EventReviewEntity eventReviewEntity) {
         return GetEventReviewResponseDTO.builder()
-                .id(eventReview.getId())
-                .eventId(eventReview.getEventId())
-                .userId(eventReview.getUserId())
-                .rating(eventReview.getRating())
-                .reviewText(eventReview.getReviewText())
-                .createdAt(eventReview.getCreatedAt())
-                .updatedAt(eventReview.getUpdatedAt())
+                .id(eventReviewEntity.getId())
+                .eventId(eventReviewEntity.getEventId())
+                .userId(eventReviewEntity.getUserId())
+                .rating(eventReviewEntity.getRating())
+                .reviewText(eventReviewEntity.getReviewText())
+                .createdAt(eventReviewEntity.getCreatedAt())
+                .updatedAt(eventReviewEntity.getUpdatedAt())
                 .build();
     }
 

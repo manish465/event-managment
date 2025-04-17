@@ -12,21 +12,19 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "event-update-table")
+@Document(collection = "feed-post-table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EventUpdate {
+public class FeedPostEntity {
     @Id
-    @Field(name = "event-update-id")
+    @Field(name = "feed-post-id")
     private String id;
-    @Field(name = "event-id")
-    private String eventId;
     @Field(name = "user-id")
     private String userId;
-    @Field(name = "update-text")
-    private String updateText;
+    @Field(name = "post-text")
+    private String postText;
     @CreatedDate
     @Field(name = "created-at")
     private LocalDateTime createdAt;

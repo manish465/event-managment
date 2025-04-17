@@ -1,4 +1,4 @@
-package com.manish.content.entity;
+package com.manish.interaction.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,19 +12,21 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "feed-post-table")
+@Document(collection = "comments_table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FeedPost {
+public class CommentEntity {
     @Id
-    @Field(name = "feed-post-id")
+    @Field(name = "comment-id")
     private String id;
+    @Field(name = "parent-id")
+    private String parentId;
     @Field(name = "user-id")
     private String userId;
-    @Field(name = "post-text")
-    private String postText;
+    @Field(name = "comment-text")
+    private String commentText;
     @CreatedDate
     @Field(name = "created-at")
     private LocalDateTime createdAt;

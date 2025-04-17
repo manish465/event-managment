@@ -4,7 +4,7 @@ import com.manish.common.request.AddEventUpdateRequestDTO;
 import com.manish.common.request.UpdateEventUpdateRequestDTO;
 import com.manish.common.response.GeneralMessageResponseDTO;
 import com.manish.common.response.GetEventUpdateResponseDTO;
-import com.manish.content.entity.EventUpdate;
+import com.manish.content.entity.EventUpdateEntity;
 import com.manish.content.mapper.EventUpdateMapper;
 import com.manish.content.repository.EventUpdateRepository;
 import jakarta.validation.Valid;
@@ -38,7 +38,7 @@ public class EventUpdateService {
     public GeneralMessageResponseDTO updateEventUpdate(@Valid UpdateEventUpdateRequestDTO updateEventUpdateRequestDTO) {
         log.info("Update Event update request received for event-data {}", updateEventUpdateRequestDTO);
 
-        Optional<EventUpdate> eventUpdateOptional = eventUpdateRepository.findById(updateEventUpdateRequestDTO.getId());
+        Optional<EventUpdateEntity> eventUpdateOptional = eventUpdateRepository.findById(updateEventUpdateRequestDTO.getId());
 
         if (eventUpdateOptional.isEmpty())
             return new GeneralMessageResponseDTO("Event update not found");
@@ -53,7 +53,7 @@ public class EventUpdateService {
     public GeneralMessageResponseDTO deleteEventUpdate(String updateId) {
         log.info("Delete Event update request received for update-id {}", updateId);
 
-        Optional<EventUpdate> eventUpdateOptional = eventUpdateRepository.findById(updateId);
+        Optional<EventUpdateEntity> eventUpdateOptional = eventUpdateRepository.findById(updateId);
         if (eventUpdateOptional.isEmpty())
             return new GeneralMessageResponseDTO("Event update not found");
 
